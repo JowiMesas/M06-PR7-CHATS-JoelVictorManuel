@@ -1,6 +1,6 @@
 import React from "react";
 import Login from "../components/Login"; // Ajusta la ruta si es necesario
-import { User } from "../types/user";
+import { User } from "../types/User";
 
 const LoginPage: React.FC = () => {
   const handleLogin = (user: User) => {
