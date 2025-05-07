@@ -1,6 +1,6 @@
 import React, { useState, FormEvent } from "react";
 import { authService } from "../services/authService";
-import { User } from "../types/user";
+import { User } from "../types/User.ts";
 
 interface Props {
   onLogin: (user: User) => void;
