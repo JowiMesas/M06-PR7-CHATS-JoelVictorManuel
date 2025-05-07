@@ -1,8 +1,7 @@
-import { request, response } from "express";
-import db from "../data/data.json";
+const db = require("../data/data.json");
 
-export default (req: request, res: response) => {
-  const { email, username } = req.body as { email: string; username: string };
+module.exports = (req, res) => {
+  const { email, username } = req.body;
 
   const user = db.usuarios.find(
     (u) => u.email === email && u.username === username
