@@ -4,8 +4,8 @@ import { User } from "../types/User";
 
 const LoginPage: React.FC = () => {
   const handleLogin = (user: User) => {
+    localStorage.setItem("user", JSON.stringify(user));
     console.log("Usuario logueado:", user);
-    // Aquí puedes redirigir o guardar el usuario en un contexto, etc.
   };
 
   return (
