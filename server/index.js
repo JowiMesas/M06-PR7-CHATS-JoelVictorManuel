@@ -2,14 +2,14 @@ const express = require("express");
 const http = require("http");
 const WebSocket = require("ws");
 const cors = require("cors");
-import authRoutes from "./routes/authRoutes"; // Importa las rutas de autenticación
+// import authRoutes from "./routes/authRoutes"; // Importa las rutas de autenticación
 
 const app = express();
 const port = 4000;
 
 app.use(cors());
 app.use(express.json());
-app.use('/api', authRoutes);
+// app.use('/api', authRoutes);
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
