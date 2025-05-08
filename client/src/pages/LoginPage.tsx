@@ -1,11 +1,14 @@
 import React from "react";
-import Login from "../components/Login"; // Ajusta la ruta si es necesario
+import Login from "../components/Login"; 
+import { useAuth } from '../contexts/AuthContext';
+
 import { User } from "../types/User";
 
 const LoginPage: React.FC = () => {
+  const { login } = useAuth();
+
   const handleLogin = (user: User) => {
-    localStorage.setItem("user", JSON.stringify(user));
-    console.log("Usuario logueado:", user);
+    login(user);
   };
 
   return (

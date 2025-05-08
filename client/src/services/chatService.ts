@@ -1,9 +1,10 @@
-const BASE = 'http://localhost:4000/api';
+const BASE = "http://localhost:4000/api";
 export const chatService = {
-  getHistory: async (roomId: string) =>
-    (await fetch(`${BASE}/chat/${roomId}/history`)).json(),
-  sendMessage: async (msg: any) =>
-    fetch(`${BASE}/chat/${msg.salaId}/send`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(msg)
-    }),
+  getHistory: () => fetch(`${BASE}/chat/view_hist`).then((res) => res.json()),
+  sendMessage: (emisorId: string, contenido: string) =>
+    fetch(`${BASE}/chat/send_message`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ emisorId, contenido }),
+    }).then((res) => res.json()),
 };
