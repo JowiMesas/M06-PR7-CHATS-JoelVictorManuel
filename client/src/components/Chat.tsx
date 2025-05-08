@@ -1,27 +1,54 @@
-import { useEffect, useState } from "react";
-import { chatService } from "../services/chatService";
-import { initSocket, sendThroughSocket } from "../services/socketService";
+import { useEffect, useState, useRef } from "react";
+import {
+  initSocket,
+  sendThroughSocket,
+  closeSocket,
+} from "../services/socketService";
 import { useAuth } from "../contexts/AuthContext";
+import { Mensaje } from "../types/Chat";
 
 export default function Chat() {
   const { user } = useAuth();
-  const [msgs, setMsgs] = useState<any[]>([]);
+  const [msgs, setMsgs] = useState<Mensaje[]>([]);
   const [text, setText] = useState("");
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Cargar historial inicial
-    chatService.getHistory().then(setMsgs);
-    // Inicializar WebSocket con callback de llegada de mensajes
-    initSocket((data: string) => {
-      const msg = JSON.parse(data);
-      setMsgs((prev) => [...prev, msg]);
+    fetch("http://localhost:4000/api/chat/view_hist")
+      .then((res) => res.json())
+      .then((data: Mensaje[]) => setMsgs(data));
+
+    // Iniciar WebSocket y manejar mensajes sin duplicados
+    initSocket(async (dataStr: string) => {
+      try {
+        const msg: Mensaje = JSON.parse(dataStr);
+        setMsgs((prev) =>
+          prev.some((m) => m.id === msg.id) ? prev : [...prev, msg]
+        );
+      } catch (err) {
+        console.error("WS parse error", err);
+      }
     });
+
+    return () => {
+      closeSocket();
+    };
   }, []);
+
+  useEffect(() => {
+    // Auto-scroll al final cuando cambian los mensajes
+    const el = containerRef.current;
+    if (el) {
+      el.scrollTop = el.scrollHeight;
+    }
+  }, [msgs]);
 
   const send = () => {
     if (!user || !text.trim()) return;
     const msg = { emisorId: user.id.toString(), contenido: text };
-    sendThroughSocket(JSON.stringify(msg)); // WS envía y backend guarda
+    // Solo WebSocket: el servidor persiste y reenvía
+    sendThroughSocket(JSON.stringify(msg));
     setText("");
   };
 
@@ -30,11 +57,10 @@ export default function Chat() {
       {/* Cabecera del chat */}
       <div className="bg-blue-500 text-white p-3 flex justify-between items-center">
         <h3 className="font-medium text-sm">Chat en vivo</h3>
- 
       </div>
 
       {/* Mensajes */}
-      <div className="h-64 overflow-auto p-3 bg-gray-50">
+      <div ref={containerRef} className="h-64 overflow-auto p-3 bg-gray-50">
         {msgs.map((m) => (
           <div
             key={m.id}
@@ -54,7 +80,7 @@ export default function Chat() {
               <div className="text-xs opacity-80 mb-1">
                 {m.emisorId === user?.id.toString()
                   ? "Tú"
-                  : ` ${m.emisorId}`}
+                  : m.username || m.emisorId}
               </div>
               <div>{m.contenido}</div>
             </div>
