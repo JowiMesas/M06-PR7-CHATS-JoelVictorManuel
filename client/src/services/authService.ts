@@ -15,6 +15,5 @@ export const authService = {
     return res.json();
   },
 
-  getRooms: async () => fetch(`${BASE}/auth/salas`).then((res) => res.json()),
 };
 
