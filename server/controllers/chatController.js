@@ -10,20 +10,31 @@ function writeDB(db) {
 
 exports.viewHistory = (req, res) => {
   const db = readDB();
-  res.json(db.mensajes.filter((m) => m.salaId === "s1"));
+  // Enriquecer cada mensaje histórico con username
+  const enriched = db.mensajes
+    .filter((m) => m.salaId === "s1")
+    .map((m) => {
+      const user = db.usuarios.find((u) => u.id === m.emisorId);
+      return {
+        ...m,
+        username: user ? user.username : m.emisorId,
+      };
+    });
+  res.json(enriched);
 };
 
 exports.sendMessage = (req, res) => {
   const { emisorId, contenido } = req.body;
   const db = readDB();
-  const newMsg = {
+  const msg = {
     id: `m${db.mensajes.length + 1}`,
     salaId: "s1",
     emisorId,
     contenido,
+    username,
     timestamp: new Date().toISOString(),
   };
-  db.mensajes.push(newMsg);
+  db.mensajes.push(msg);
   writeDB(db);
-  res.json(newMsg);
+  res.json(msg);
 };

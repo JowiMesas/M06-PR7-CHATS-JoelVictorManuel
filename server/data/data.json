@@ -114,44 +114,26 @@
     {
       "id": "m6",
       "salaId": "s1",
-      "emisorId": "u3",
-      "contenido": "hola",
-      "timestamp": "2025-05-08T10:00:11.376Z"
+      "emisorId": "u4",
+      "username": "Marta",
+      "contenido": "hola Profesor",
+      "timestamp": "2025-05-08T16:59:00.595Z"
     },
     {
       "id": "m7",
       "salaId": "s1",
       "emisorId": "u3",
-      "contenido": "Ana banana",
-      "timestamp": "2025-05-08T10:01:17.797Z"
+      "username": "Luis",
+      "contenido": "Hola, soy Luis",
+      "timestamp": "2025-05-08T16:59:06.795Z"
     },
     {
       "id": "m8",
       "salaId": "s1",
-      "emisorId": "u2",
-      "contenido": "luis ",
-      "timestamp": "2025-05-08T10:01:53.797Z"
-    },
-    {
-      "id": "m9",
-      "salaId": "s1",
       "emisorId": "u3",
-      "contenido": "hola",
-      "timestamp": "2025-05-08T10:15:12.893Z"
-    },
-    {
-      "id": "m10",
-      "salaId": "s1",
-      "emisorId": "u2",
-      "contenido": "hola caracola",
-      "timestamp": "2025-05-08T10:15:30.764Z"
-    },
-    {
-      "id": "m11",
-      "salaId": "s1",
-      "emisorId": "u3",
-      "contenido": "hfoggnfgfg",
-      "timestamp": "2025-05-08T10:15:42.264Z"
+      "username": "Luis",
+      "contenido": "Victor",
+      "timestamp": "2025-05-08T17:08:17.337Z"
     }
   ]
 }
