@@ -7,4 +7,7 @@ export const chatService = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ emisorId, contenido }),
     }).then((res) => res.json()),
+  exportChat: (format: "json" | "txt") => {
+    window.open(`${BASE}/chat/export/${format}`, "_blank");
+  },
 };
