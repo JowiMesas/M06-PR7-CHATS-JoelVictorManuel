@@ -38,3 +38,55 @@ exports.sendMessage = (req, res) => {
   writeDB(db);
   res.json(msg);
 };
+exports.exportChat = (req, res) => {
+  const format = req.params.format;
+  const db = readDB();
+  const msgs = db.mensajes
+    .filter((m) => m.salaId === "s1")
+    .map((m) => {
+      const u = db.usuarios.find((u) => u.id === m.emisorId);
+      return { ...m, username: u ? u.username : m.emisorId };
+    });
+
+  if (format === "json") {
+    res.setHeader("Content-Disposition", "attachment; filename=chat.json");
+    res.type("application/json");
+    return res.send(JSON.stringify(msgs, null, 2));
+  }
+
+  if (format === "txt") {
+    // Agrupar mensajes por día
+    const groups = msgs.reduce((acc, m) => {
+      const date = new Date(m.timestamp);
+      const dayKey = date.toLocaleDateString("es-ES", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+      if (!acc[dayKey]) acc[dayKey] = [];
+      acc[dayKey].push(m);
+      return acc;
+    }, {});
+
+    let textOutput = "";
+    for (const day of Object.keys(groups)) {
+      textOutput += `=== ${day} ===
+`;
+      for (const m of groups[day]) {
+        const time = new Date(m.timestamp).toLocaleTimeString("es-ES", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        textOutput += `[${time}] ${m.username}: ${m.contenido}
+`;
+      }
+      textOutput += "";
+    }
+
+    res.setHeader("Content-Disposition", "attachment; filename=chat.txt");
+    res.type("text/plain");
+    return res.send(textOutput);
+  }
+
+  res.status(400).send("Formato no soportado");
+};

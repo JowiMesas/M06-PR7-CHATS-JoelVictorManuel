@@ -79,6 +79,7 @@
       "id": "m1",
       "salaId": "s1",
       "emisorId": "u1",
+      "username": "Profesor",
       "contenido": "Hola, esta es la sala del profesor.",
       "timestamp": "2025-04-20T10:00:00"
     },
@@ -114,26 +115,18 @@
     {
       "id": "m6",
       "salaId": "s1",
-      "emisorId": "u4",
-      "username": "Marta",
-      "contenido": "hola Profesor",
-      "timestamp": "2025-05-08T16:59:00.595Z"
+      "emisorId": "u3",
+      "username": "Luis",
+      "contenido": "hola",
+      "timestamp": "2025-05-12T09:45:25.890Z"
     },
     {
       "id": "m7",
       "salaId": "s1",
-      "emisorId": "u3",
-      "username": "Luis",
-      "contenido": "Hola, soy Luis",
-      "timestamp": "2025-05-08T16:59:06.795Z"
-    },
-    {
-      "id": "m8",
-      "salaId": "s1",
-      "emisorId": "u3",
-      "username": "Luis",
-      "contenido": "Victor",
-      "timestamp": "2025-05-08T17:08:17.337Z"
+      "emisorId": "u4",
+      "username": "Marta",
+      "contenido": "Hola Luis",
+      "timestamp": "2025-05-12T09:45:35.401Z"
     }
   ]
 }
