@@ -19,7 +19,11 @@ export const sendThroughSocket = (emisorId: string, contenido: string) => {
     socket.send(JSON.stringify({ type: 'chat', emisorId, contenido }));
   }
 };
-
+//Poder crear un documento
+export const createDocument = (titulo:string) => {
+  socket?.readyState===WebSocket.OPEN &&
+    socket.send(JSON.stringify({ type:'create-doc', titulo }));
+};
 // Para documento
 export const syncDocument = (docId: string, contenido: string) => {
   if (socket?.readyState === WebSocket.OPEN) {

@@ -12,7 +12,31 @@ exports.openDocument = (req,res)=>{
   res.json(doc);
 };
 
+exports.listDocuments = (req, res) => {
+  const db = readDB();
+  res.json(db.documentos);
+};
 
+exports.getDocument = (req, res) => {
+  const db = readDB();
+  const doc = db.documentos.find(d => d.id === req.params.id);
+  if (!doc) return res.status(404).json({ error: 'No existe' });
+  res.json(doc);
+};
+
+exports.createDocument = (req, res) => {
+  const { titulo } = req.body;
+  const db = readDB();
+  const newDoc = {
+    id: `d${db.documentos.length + 1}`,
+    titulo: titulo || `Documento ${db.documentos.length + 1}`,
+    contenido: '',
+    lastModified: new Date().toISOString(),
+  };
+  db.documentos.push(newDoc);
+  writeDB(db);
+  res.status(201).json(newDoc);
+};
 
 exports.exportDocument=(req,res)=>{
   const { format,docId }=req.params;

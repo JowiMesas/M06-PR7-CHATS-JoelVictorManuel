@@ -12,38 +12,28 @@ const docRoutes  = require('./routes/documentRoutes');
 const app  = express();
 const port = 4000;
 
-// Middlewares
 app.use(cors());
 app.use(express.json());
 
-// Rutas REST
 app.use('/api/login', authRoutes);
 app.use('/api/chat',  chatRoutes);
 app.use('/api/doc',   docRoutes);
 
-// Helpers base de datos
 const dbFile = path.join(__dirname, 'data/data.json');
-function readDB()  { return JSON.parse(fs.readFileSync(dbFile, 'utf-8')); }
-function writeDB(db){ fs.writeFileSync(dbFile, JSON.stringify(db, null, 2), 'utf-8'); }
+const readDB  = () => JSON.parse(fs.readFileSync(dbFile, 'utf-8'));
+const writeDB = db => fs.writeFileSync(dbFile, JSON.stringify(db, null, 2), 'utf-8');
 
-// Servidor HTTP
 const server = http.createServer(app);
-
-// Un único WebSocket Server para chat y documento
-const wss = new WebSocket.Server({ server });
+const wss    = new WebSocket.Server({ server });
 
 wss.on('connection', ws => {
   console.log('WebSocket conectado');
 
   ws.on('message', data => {
     let msg;
-    try {
-      msg = JSON.parse(data);
-    } catch {
-      return;
-    }
+    try { msg = JSON.parse(data); } catch { return; }
 
-    // Mensaje de chat
+    // Chat
     if (msg.type === 'chat') {
       const db = readDB();
       const u  = db.usuarios.find(u => u.id === msg.emisorId);
@@ -57,35 +47,40 @@ wss.on('connection', ws => {
       };
       db.mensajes.push(newMsg);
       writeDB(db);
-
-      // Reenviar a todos
       const payload = JSON.stringify({ type: 'chat', ...newMsg });
-      wss.clients.forEach(client => {
-        if (client.readyState === WebSocket.OPEN) {
-          client.send(payload);
-        }
+      wss.clients.forEach(c => {
+        if (c.readyState === WebSocket.OPEN) c.send(payload);
       });
       return;
     }
 
-    // Mensaje de documento (sync o autosave)
-    if (msg.type === 'sync' || msg.type === 'autosave') {
-      const db  = readDB();
+    // Documentos: sync, autosave, create-doc
+    if (['sync', 'autosave', 'create-doc'].includes(msg.type)) {
+      const db = readDB();
+
+      if (msg.type === 'create-doc') {
+        const newDoc = {
+          id: `d${Date.now()}`,
+          titulo: msg.titulo,
+          contenido: '',
+          lastModified: new Date().toISOString()
+        };
+        db.documentos.push(newDoc);
+        writeDB(db);
+        ws.send(JSON.stringify({ type:'doc-created', doc: newDoc }));
+        return;
+      }
+
       const doc = db.documentos.find(d => d.id === msg.docId);
       if (!doc) return;
-
       if (msg.type === 'autosave') {
-        doc.contenido    = msg.contenido;
+        doc.contenido = msg.contenido;
         doc.lastModified = new Date().toISOString();
         writeDB(db);
       }
-
-      // Reenviar a todos los demás clientes
-      const payload = JSON.stringify(msg);
-      wss.clients.forEach(client => {
-        if (client !== ws && client.readyState === WebSocket.OPEN) {
-          client.send(payload);
-        }
+      const pl = JSON.stringify(msg);
+      wss.clients.forEach(c => {
+        if (c !== ws && c.readyState === WebSocket.OPEN) c.send(pl);
       });
     }
   });
@@ -93,5 +88,4 @@ wss.on('connection', ws => {
   ws.on('close', () => console.log('WebSocket desconectado'));
 });
 
-// Iniciar servidor
 server.listen(port, () => console.log(`Servidor escuchando en http://localhost:${port}`));

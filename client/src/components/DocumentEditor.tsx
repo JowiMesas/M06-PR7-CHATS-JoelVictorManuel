@@ -3,29 +3,22 @@ import { initSocket, syncDocument, autosaveDocument, closeSocket } from '../serv
 import { docService } from "../services/documentService";
 import { Document } from "../types/Document";
 
-export default function DocumentEditor() {
-  const [doc, setDoc] = useState<Document|null>(null);
+export default function DocumentEditor({ doc }: { doc: Document }) {
   const [text, setText] = useState('');
-  const docId = 'd1';
 
   useEffect(() => {
-    docService.open(docId).then(d => {
-      setDoc(d);
-      setText(d.contenido);
-      initSocket(msg => {
-        if (msg.type === 'sync') {
-          setText(msg.contenido);
-        }
-      });
+    docService.open(doc.id).then(d => setText(d.contenido));
+    initSocket(msg => {
+      if (msg.type === 'sync' && msg.docId === doc.id) setText(msg.contenido);
     });
     return () => closeSocket();
-  }, []);
+  }, [doc.id]);
 
   useEffect(() => {
-    syncDocument(docId, text);
-    const iv = setInterval(() => autosaveDocument(docId, text), 3000);
+    syncDocument(doc.id, text);
+    const iv = setInterval(() => autosaveDocument(doc.id, text), 3000);
     return () => clearInterval(iv);
-  }, [text]);
+  }, [text, doc.id]);
 
   if (!doc) return <div>Cargando…</div>;
   return (
