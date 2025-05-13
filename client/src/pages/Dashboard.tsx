@@ -1,6 +1,6 @@
 import Chat from "../components/Chat";
 import { useAuth } from "../contexts/AuthContext";
-
+import Document from "../components/Document";
 export default function Dashboard() {
   const { logout } = useAuth();
 
@@ -18,6 +18,7 @@ export default function Dashboard() {
       <main className="flex-1 overflow-auto p-4">
         <Chat />
         {/* Aquí podrías añadir sección de documentos colaborativos */}
+        <Document/>
       </main>
     </div>
   );

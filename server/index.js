@@ -34,7 +34,6 @@ const wss = new WebSocket.Server({ server });
 wss.on("connection", (ws) => {
   console.log("WS connected");
   ws.on("message", (data) => {
-    
     // Persistir y enriquecer mensaje
     let newMsg;
     try {
