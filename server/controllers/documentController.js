@@ -12,12 +12,7 @@ exports.openDocument = (req,res)=>{
   res.json(doc);
 };
 
-exports.saveDocument = (req,res)=>{
-  const { docId,contenido }=req.body;
-  const db=readDB();const doc=db.documentos.find(d=>d.id===docId);
-  if(doc){doc.contenido=contenido;doc.lastModified=new Date().toISOString();writeDB(db);return res.json({success:true,lastModified:doc.lastModified});}
-  return res.status(404).json({error:'No encontrado'});
-};
+
 
 exports.exportDocument=(req,res)=>{
   const { format,docId }=req.params;

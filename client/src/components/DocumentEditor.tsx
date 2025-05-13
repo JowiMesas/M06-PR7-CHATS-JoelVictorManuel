@@ -23,7 +23,7 @@ export default function DocumentEditor() {
 
   useEffect(() => {
     syncDocument(docId, text);
-    const iv = setInterval(() => autosaveDocument(docId, text), 5000);
+    const iv = setInterval(() => autosaveDocument(docId, text), 2000);
     return () => clearInterval(iv);
   }, [text]);
 
@@ -37,12 +37,7 @@ export default function DocumentEditor() {
         onChange={(e) => setText(e.target.value)}
       />
       <div className="mt-2 flex space-x-2">
-        <button
-          onClick={() => docService.save(doc.id, text)}
-          className="px-3 py-1 bg-blue-500 text-white rounded"
-        >
-          Guardar
-        </button>
+
         <button
           onClick={() => docService.export("txt", doc.id)}
           className="px-3 py-1 bg-green-500 text-white rounded"

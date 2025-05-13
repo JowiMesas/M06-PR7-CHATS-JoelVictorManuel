@@ -68,10 +68,10 @@
   "documentos": [
     {
       "id": "d1",
-      "salaId": "s3",
+      "salaId": "s1",
       "titulo": "Documento1",
-      "contenido": "Hola Luis, esta es la primera línea del documento. Hola soy marta jffnfgggggggggggggggggggggggggggggdgdfdf",
-      "lastModified": "2025-05-13T10:08:48.911Z"
+      "contenido": "Hola Luis, esta es la primera línea del documento. Rapidez autosave",
+      "lastModified": "2025-05-13T10:16:12.962Z"
     }
   ],
   "mensajes": [
