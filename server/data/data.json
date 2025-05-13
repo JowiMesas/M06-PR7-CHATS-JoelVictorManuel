@@ -69,9 +69,9 @@
     {
       "id": "d1",
       "salaId": "s3",
-      "titulo": "Ejercicio Ana-Luis",
-      "contenido": "Hola Luis, esta es la primera línea del documento.",
-      "lastModified": "2025-04-20T10:20:00"
+      "titulo": "Documento1",
+      "contenido": "Hola Luis, esta es la primera línea del documento. Hola soy marta jffnfgggggggggggggggggggggggggggggdgdfdf",
+      "lastModified": "2025-05-13T10:08:48.911Z"
     }
   ],
   "mensajes": [
@@ -127,6 +127,22 @@
       "username": "Marta",
       "contenido": "Hola Luis",
       "timestamp": "2025-05-12T09:45:35.401Z"
+    },
+    {
+      "id": "m8",
+      "salaId": "s1",
+      "emisorId": "u3",
+      "username": "Luis",
+      "contenido": "hola",
+      "timestamp": "2025-05-13T10:05:19.786Z"
+    },
+    {
+      "id": "m9",
+      "salaId": "s1",
+      "emisorId": "u4",
+      "username": "Marta",
+      "contenido": "prueba chat con documentos",
+      "timestamp": "2025-05-13T10:08:36.116Z"
     }
   ]
 }

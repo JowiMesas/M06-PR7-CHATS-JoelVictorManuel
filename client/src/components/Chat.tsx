@@ -16,25 +16,17 @@ export default function Chat() {
 
   useEffect(() => {
     // Cargar historial inicial
-    fetch("http://localhost:4000/api/chat/view_hist")
-      .then((res) => res.json())
-      .then((data: Mensaje[]) => setMsgs(data));
+    chatService.getHistory().then(setMsgs);
 
     // Iniciar WebSocket y manejar mensajes sin duplicados
-    initSocket(async (dataStr: string) => {
-      try {
-        const msg: Mensaje = JSON.parse(dataStr);
-        setMsgs((prev) =>
-          prev.some((m) => m.id === msg.id) ? prev : [...prev, msg]
-        );
-      } catch (err) {
-        console.error("WS parse error", err);
-      }
+    initSocket((msg) => {
+      if (msg.type !== "chat") return;
+      setMsgs((prev) =>
+        prev.some((m) => m.id === msg.id) ? prev : [...prev, msg]
+      );
     });
 
-    return () => {
-      closeSocket();
-    };
+    return () => closeSocket();
   }, []);
 
   useEffect(() => {
@@ -46,10 +38,8 @@ export default function Chat() {
   }, [msgs]);
 
   const send = () => {
-    if (!user || !text.trim()) return;
-    const msg = { emisorId: user.id.toString(), contenido: text };
-    // Solo WebSocket: el servidor persiste y reenvía
-    sendThroughSocket(JSON.stringify(msg));
+    if (!text.trim()) return;
+    sendThroughSocket(user!.id.toString(), text);
     setText("");
   };
 

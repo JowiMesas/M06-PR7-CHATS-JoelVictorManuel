@@ -1,35 +1,33 @@
-import { useEffect, useState, useRef } from "react";
+import  { useEffect, useState } from 'react';
+import { initSocket, syncDocument, autosaveDocument, closeSocket } from '../services/socketService';
 import { docService } from "../services/documentService";
 import { Document } from "../types/Document";
+
 export default function DocumentEditor() {
-  const [doc, setDoc] = useState<Document | null>(null);
-  const [text, setText] = useState("");
-  const wsRef = useRef<WebSocket | null>(null);
-  const docId = "d1";
+  const [doc, setDoc] = useState<Document|null>(null);
+  const [text, setText] = useState('');
+  const docId = 'd1';
+
   useEffect(() => {
-    docService.open(docId).then((d) => {
+    docService.open(docId).then(d => {
       setDoc(d);
       setText(d.contenido);
-      const ws = new WebSocket("ws://localhost:4000/ws/doc");
-      ws.onmessage = (e) => {
-        const msg = JSON.parse(e.data);
-        if (msg.type === "init" || msg.type === "sync") setText(msg.contenido);
-      };
-      wsRef.current = ws;
+      initSocket(msg => {
+        if (msg.type === 'sync') {
+          setText(msg.contenido);
+        }
+      });
     });
-    return () => wsRef.current?.close();
+    return () => closeSocket();
   }, []);
+
   useEffect(() => {
-    const ws = wsRef.current;
-    if (!ws) return;
-    ws.send(JSON.stringify({ type: "sync", contenido: text }));
-    const iv = setInterval(
-      () => ws.send(JSON.stringify({ type: "autosave", contenido: text })),
-      5000
-    );
+    syncDocument(docId, text);
+    const iv = setInterval(() => autosaveDocument(docId, text), 5000);
     return () => clearInterval(iv);
   }, [text]);
-  if (!doc) return <div>Cargando...</div>;
+
+  if (!doc) return <div>Cargando…</div>;
   return (
     <div className="p-4">
       <h2 className="text-xl mb-2">{doc.titulo}</h2>
