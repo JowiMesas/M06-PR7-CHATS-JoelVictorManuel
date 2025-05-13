@@ -23,7 +23,7 @@ export default function DocumentEditor() {
 
   useEffect(() => {
     syncDocument(docId, text);
-    const iv = setInterval(() => autosaveDocument(docId, text), 2000);
+    const iv = setInterval(() => autosaveDocument(docId, text), 3000);
     return () => clearInterval(iv);
   }, [text]);
 
