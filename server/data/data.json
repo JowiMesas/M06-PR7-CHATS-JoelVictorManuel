@@ -35,7 +35,7 @@
   "salas": [
     {
       "id": "s1",
-      "nombre": "Sala Profesor",
+      "nombre": "Sala Principal",
       "tipo": "publica",
       "participantes": [
         "u1",
@@ -71,7 +71,7 @@
       "salaId": "s1",
       "titulo": "Documento1",
       "contenido": "Hola Luis, esta es la primera línea del documento. Hola Caracoola ",
-      "lastModified": "2025-05-13T10:26:28.892Z"
+      "lastModified": "2025-05-13T11:22:36.893Z"
     }
   ],
   "mensajes": [
