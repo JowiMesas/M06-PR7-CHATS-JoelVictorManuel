@@ -8,6 +8,7 @@ const path      = require('path');
 const authRoutes = require('./routes/authRoutes');
 const chatRoutes = require('./routes/chatRoutes');
 const docRoutes  = require('./routes/documentRoutes');
+const fileRoutes = require('./routes/fileRoutes');
 
 const app  = express();
 const port = 4000;
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/api/login', authRoutes);
 app.use('/api/chat',  chatRoutes);
 app.use('/api/doc',   docRoutes);
+app.use('/api/files', fileRoutes);
 
 const dbFile = path.join(__dirname, 'data/data.json');
 const readDB  = () => JSON.parse(fs.readFileSync(dbFile, 'utf-8'));

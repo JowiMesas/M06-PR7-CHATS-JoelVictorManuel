@@ -3,6 +3,8 @@ import Chat from "../components/Chat";
 import { useAuth } from "../contexts/AuthContext";
 import DocumentEditor from "../components/DocumentEditor";
 import DocumentList from "../components/DocumentList";
+import FileUpload from '../components/FileUpload';
+import FileList from '../components/FileList';
 import { Document } from "../types/Document";
 
 export default function Dashboard() {
@@ -62,6 +64,8 @@ export default function Dashboard() {
           {/* Right sidebar - Chat */}
           <div className="col-span-12 lg:col-span-3 h-full overflow-hidden hidden lg:block">
             <Chat />
+        <FileUpload onUploaded={() => {/* refresca lista abajo */}} />
+      <FileList />
           </div>
         </div>
       </main>
