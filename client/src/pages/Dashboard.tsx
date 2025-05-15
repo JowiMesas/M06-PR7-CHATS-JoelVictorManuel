@@ -30,8 +30,8 @@ export default function Dashboard() {
             {/* Botones de toggle para móvil */}
             <div className="lg:hidden flex space-x-2">
               <button
-                onClick={() => setShowChatMobile(!showChatMobile)}
-                className="bg-blue-700 hover:bg-blue-800 px-3 py-1.5 rounded text-sm transition-colors flex items-center"
+                onClick={() => {setShowChatMobile(true); setShowFileSection(false);}}
+                className={`bg-blue-700 hover:bg-blue-800 px-3 py-1.5 rounded text-sm transition-colors flex items-center ${showChatMobile ? 'ring-2 ring-white' : ''}`}
               >
                 <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                   <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
@@ -40,8 +40,8 @@ export default function Dashboard() {
                 Chat
               </button>
               <button
-                onClick={() => setShowFileSection(!showFileSection)}
-                className="bg-blue-700 hover:bg-blue-800 px-3 py-1.5 rounded text-sm transition-colors flex items-center"
+                onClick={() => {setShowFileSection(true); setShowChatMobile(false);}}
+                className={`bg-blue-700 hover:bg-blue-800 px-3 py-1.5 rounded text-sm transition-colors flex items-center ${showFileSection ? 'ring-2 ring-white' : ''}`}
               >
                 <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                   <path fillRule="evenodd" d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z" clipRule="evenodd" />
@@ -67,7 +67,7 @@ export default function Dashboard() {
       <main className="flex-1 overflow-hidden">
         <div className="h-full grid grid-cols-12 gap-4 p-4">
           {/* Left sidebar - Documents list */}
-          <div className={`${showFileSection || showChatMobile ? 'hidden' : 'col-span-12'} md:col-span-3 lg:col-span-2 md:block flex flex-col h-full overflow-hidden`}>
+          <div className={`${(showFileSection || showChatMobile) ? 'hidden' : 'col-span-12'} md:col-span-3 lg:col-span-2 md:block flex flex-col h-full overflow-hidden`}>
             <DocumentList onSelect={setSelectedDoc} />
           </div>
 
@@ -89,42 +89,41 @@ export default function Dashboard() {
           </div>
 
           {/* Right sidebar - Chat and Files */}
-          <div className={`${!showFileSection && !showChatMobile ? 'hidden' : 'col-span-12'} lg:col-span-3 lg:block h-full overflow-hidden`}>
-            <div className="h-full flex flex-col space-y-4">
+          <div className={`${(!showFileSection && !showChatMobile) ? 'hidden lg:block' : 'col-span-12'} lg:col-span-3 h-full overflow-hidden`}>
+            <div className="h-full flex flex-col">
               {/* Panel de pestañas para móvil */}
-              <div className="lg:hidden flex border-b border-gray-200 mb-2">
+              <div className="lg:hidden flex border-b border-gray-200 mb-4">
                 <button 
-                  onClick={() => setShowChatMobile(true)}
+                  onClick={() => {setShowChatMobile(true); setShowFileSection(false);}}
                   className={`flex-1 py-2 text-center text-sm font-medium ${showChatMobile ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
                 >
                   Chat
                 </button>
                 <button 
                   onClick={() => {setShowFileSection(true); setShowChatMobile(false);}}
-                  className={`flex-1 py-2 text-center text-sm font-medium ${!showChatMobile && showFileSection ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
+                  className={`flex-1 py-2 text-center text-sm font-medium ${showFileSection ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
                 >
                   Archivos
                 </button>
               </div>
               
-              {/* Chat Section */}
-              {(showChatMobile || (!showFileSection && !showChatMobile)) && (
-                <div className={`${showFileSection && !showChatMobile ? 'hidden' : 'block'} lg:block flex-1 max-h-full overflow-hidden`}>
-                  <div className="h-full flex flex-col overflow-hidden">
+              {/* Contenedor flexible que adapta el tamaño */}
+              <div className="flex flex-col h-full overflow-hidden">
+                {/* Chat Section */}
+                {(showChatMobile || !showFileSection) && (
+                  <div className={`${showFileSection ? 'hidden' : 'flex-1'} lg:block h-full overflow-hidden mb-4 lg:mb-0`}>
                     <Chat />
                   </div>
-                </div>
-              )}
-              
-              {/* Files Section */}
-              {(showFileSection || (!showFileSection && !showChatMobile)) && (
-                <div className={`${showChatMobile ? 'hidden' : 'block'} lg:block overflow-y-auto`}>
-                  <div className="space-y-4">
+                )}
+                
+                {/* Files Section */}
+                {(showFileSection || (!showChatMobile && !showFileSection)) && (
+                  <div className={`${showChatMobile ? 'hidden' : 'flex-none'} lg:mt-4 space-y-4 overflow-auto max-h-full lg:max-h-96`}>
                     <FileUpload onUploaded={() => {/* refresca lista abajo */}} />
                     <FileList />
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>

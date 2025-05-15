@@ -72,11 +72,11 @@ export default function Chat() {
 
       {!isCollapsed && (
         <>
-          {/* Mensajes */}
+          {/* Mensajes - Ajustado para ocupar todo el espacio disponible */}
           <div 
             ref={containerRef} 
             className="flex-1 overflow-auto p-3 bg-gray-50"
-            style={{ minHeight: "150px" }}
+            style={{ minHeight: "100px", maxHeight: "calc(100% - 120px)" }}
           >
             {msgs.map((m) => (
               <div
@@ -113,7 +113,7 @@ export default function Chat() {
             ))}
           </div>
 
-          {/* Botones de exportación */}
+          {/* Botones de exportación - Altura fija para evitar que crezcan demasiado */}
           <div className="bg-gray-50 border-t border-gray-200 p-2 flex justify-end space-x-3">
             <button
               onClick={() => chatService.exportChat("json")}
@@ -153,8 +153,8 @@ export default function Chat() {
             </button>
           </div>
 
-          {/* Input y botón de enviar */}
-          <div className="p-2 flex space-x-2 bg-white">
+          {/* Input y botón de enviar - Altura fija para control consistente */}
+          <div className="p-2 flex space-x-2 bg-white border-t border-gray-200">
             <input
               value={text}
               onChange={(e) => setText(e.target.value)}

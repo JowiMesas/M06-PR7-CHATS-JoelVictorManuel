@@ -24,7 +24,10 @@
   "parejas": [
     {
       "id": "p1",
-      "usuarios": ["u2", "u3"],
+      "usuarios": [
+        "u2",
+        "u3"
+      ],
       "salaId": "s3",
       "documentoId": "d1"
     }
@@ -34,19 +37,31 @@
       "id": "s1",
       "nombre": "Sala Principal",
       "tipo": "publica",
-      "participantes": ["u1", "u2", "u3", "u4"]
+      "participantes": [
+        "u1",
+        "u2",
+        "u3",
+        "u4"
+      ]
     },
     {
       "id": "s2",
       "nombre": "Sala Alumnos",
       "tipo": "publica",
-      "participantes": ["u2", "u3", "u4"]
+      "participantes": [
+        "u2",
+        "u3",
+        "u4"
+      ]
     },
     {
       "id": "s3",
       "nombre": "Privado Ana - Luis",
       "tipo": "privada",
-      "participantes": ["u2", "u3"],
+      "participantes": [
+        "u2",
+        "u3"
+      ],
       "documentoId": "d1"
     }
   ],

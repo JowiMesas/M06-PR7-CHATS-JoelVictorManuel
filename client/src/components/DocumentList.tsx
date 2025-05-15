@@ -1,11 +1,15 @@
-import { useEffect, useState } from 'react';
-import { docService } from '../services/documentService';
-import { createDocument, initSocket } from '../services/socketService';
-import { Document } from '../types/Document';
+import { useEffect, useState } from "react";
+import { docService } from "../services/documentService";
+import { createDocument, initSocket } from "../services/socketService";
+import { Document } from "../types/Document";
 
-export default function DocumentList({ onSelect }: { onSelect: (d: Document) => void }) {
+export default function DocumentList({
+  onSelect,
+}: {
+  onSelect: (d: Document) => void;
+}) {
   const [docs, setDocs] = useState<Document[]>([]);
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(true);
 
   // Función para cargar la lista de documentos
@@ -22,18 +26,18 @@ export default function DocumentList({ onSelect }: { onSelect: (d: Document) => 
   useEffect(() => {
     // Cargamos la lista inicial de documentos
     loadDocuments();
-    
+
     // Inicializamos el socket y escuchamos todos los tipos de mensajes relacionados con documentos
-    initSocket(msg => {
-      console.log('Socket message received:', msg);
-      
+    initSocket((msg) => {
+      console.log("Socket message received:", msg);
+
       // Cuando se crea un documento nuevo
-      if (msg.type === 'doc-created' || msg.type === 'create-doc-response') {
+      if (msg.type === "doc-created" || msg.type === "create-doc-response") {
         const newDoc = msg.doc || msg.document;
         if (newDoc && newDoc.id) {
-          setDocs(prev => {
+          setDocs((prev) => {
             // Verificamos si el documento ya existe en la lista para evitar duplicados
-            const exists = prev.some(doc => doc.id === newDoc.id);
+            const exists = prev.some((doc) => doc.id === newDoc.id);
             if (exists) return prev;
             return [...prev, newDoc];
           });
@@ -43,7 +47,7 @@ export default function DocumentList({ onSelect }: { onSelect: (d: Document) => 
         }
       }
     });
-    
+
     // Limpieza al desmontar el componente
     return () => {
       // El socket se cierra en otro lugar, no necesitamos cerrarlo aquí
@@ -52,10 +56,11 @@ export default function DocumentList({ onSelect }: { onSelect: (d: Document) => 
 
   const handleCreate = async () => {
     if (!title.trim()) return;
-    
+
     // Creamos el documento a través del socket
     createDocument(title);
-    setTitle('');
+    setTitle("");
+    setTimeout(loadDocuments, 500);
   };
 
   return (
@@ -66,23 +71,36 @@ export default function DocumentList({ onSelect }: { onSelect: (d: Document) => 
           {docs.length} disponibles
         </span>
       </div>
-      
+
       {loading ? (
         <div className="flex-1 flex items-center justify-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
         </div>
       ) : docs.length > 0 ? (
         <ul className="divide-y divide-gray-100 flex-1 overflow-y-auto">
-          {docs.map(d => (
+          {docs.map((d) => (
             <li
               key={d.id}
               onClick={() => onSelect(d)}
               className="py-2 flex items-center cursor-pointer hover:bg-gray-50 px-2 rounded transition-colors group"
             >
-              <svg className="w-5 h-5 text-gray-400 mr-2 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              <svg
+                className="w-5 h-5 text-gray-400 mr-2 group-hover:text-blue-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
               </svg>
-              <span className="text-gray-700 group-hover:text-blue-600">{d.titulo}</span>
+              <span className="text-gray-700 group-hover:text-blue-600">
+                {d.titulo}
+              </span>
             </li>
           ))}
         </ul>
@@ -100,16 +118,25 @@ export default function DocumentList({ onSelect }: { onSelect: (d: Document) => 
             className="border border-gray-300 rounded-md px-3 py-2 text-sm flex-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Título del documento"
             value={title}
-            onChange={e => setTitle(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleCreate()}
+            onChange={(e) => setTitle(e.target.value)}
+            onKeyPress={(e) => e.key === "Enter" && handleCreate()}
           />
-          <button 
-            onClick={handleCreate} 
+          <button
+            onClick={handleCreate}
             className="bg-blue-500 hover:bg-blue-600 px-3 py-2 text-white rounded-md text-sm transition-colors flex items-center"
             disabled={!title.trim()}
           >
-            <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+            <svg
+              className="w-4 h-4 mr-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                clipRule="evenodd"
+              />
             </svg>
             Crear
           </button>
