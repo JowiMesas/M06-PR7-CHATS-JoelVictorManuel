@@ -77,7 +77,7 @@
       "id": "d1747306316684",
       "titulo": "Pruebas Documento",
       "contenido": "Asi arreglado funciona correctamente",
-      "lastModified": "2025-05-15T10:53:12.762Z"
+      "lastModified": "2025-05-15T10:55:18.774Z"
     }
   ],
   "mensajes": [
@@ -86,7 +86,7 @@
       "salaId": "s1",
       "emisorId": "u1",
       "username": "Profesor",
-      "contenido": "Hola, esta es la sala del profesor.",
+      "contenido": "Hola, esta es la nueva sala para hablar",
       "timestamp": "2025-04-20T10:00:00"
     },
     {
