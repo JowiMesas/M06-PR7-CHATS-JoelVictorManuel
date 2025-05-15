@@ -72,6 +72,12 @@
       "titulo": "Documento1",
       "contenido": "Esto es una prueba ",
       "lastModified": "2025-05-15T09:32:22.459Z"
+    },
+    {
+      "id": "d1747306316684",
+      "titulo": "Pruebas Documento",
+      "contenido": "Asi arreglado funciona correctamente",
+      "lastModified": "2025-05-15T10:53:12.762Z"
     }
   ],
   "mensajes": [
@@ -151,6 +157,22 @@
       "username": "Luis",
       "contenido": "ya se sube documentos",
       "timestamp": "2025-05-15T09:26:47.450Z"
+    },
+    {
+      "id": "m11",
+      "salaId": "s1",
+      "emisorId": "u3",
+      "username": "Luis",
+      "contenido": "todo finalizado Marta",
+      "timestamp": "2025-05-15T10:51:36.426Z"
+    },
+    {
+      "id": "m12",
+      "salaId": "s1",
+      "emisorId": "u4",
+      "username": "Marta",
+      "contenido": "gracias Luis",
+      "timestamp": "2025-05-15T10:51:42.267Z"
     }
   ]
 }
