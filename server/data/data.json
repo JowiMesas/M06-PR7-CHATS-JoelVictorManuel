@@ -24,10 +24,7 @@
   "parejas": [
     {
       "id": "p1",
-      "usuarios": [
-        "u2",
-        "u3"
-      ],
+      "usuarios": ["u2", "u3"],
       "salaId": "s3",
       "documentoId": "d1"
     }
@@ -37,31 +34,19 @@
       "id": "s1",
       "nombre": "Sala Principal",
       "tipo": "publica",
-      "participantes": [
-        "u1",
-        "u2",
-        "u3",
-        "u4"
-      ]
+      "participantes": ["u1", "u2", "u3", "u4"]
     },
     {
       "id": "s2",
       "nombre": "Sala Alumnos",
       "tipo": "publica",
-      "participantes": [
-        "u2",
-        "u3",
-        "u4"
-      ]
+      "participantes": ["u2", "u3", "u4"]
     },
     {
       "id": "s3",
       "nombre": "Privado Ana - Luis",
       "tipo": "privada",
-      "participantes": [
-        "u2",
-        "u3"
-      ],
+      "participantes": ["u2", "u3"],
       "documentoId": "d1"
     }
   ],
@@ -71,7 +56,7 @@
       "salaId": "s1",
       "titulo": "Documento1",
       "contenido": "Esto es una prueba ",
-      "lastModified": "2025-05-14T17:39:09.455Z"
+      "lastModified": "2025-05-15T09:32:22.459Z"
     }
   ],
   "mensajes": [
@@ -143,6 +128,14 @@
       "username": "Marta",
       "contenido": "prueba chat con documentos",
       "timestamp": "2025-05-13T10:08:36.116Z"
+    },
+    {
+      "id": "m10",
+      "salaId": "s1",
+      "emisorId": "u3",
+      "username": "Luis",
+      "contenido": "ya se sube documentos",
+      "timestamp": "2025-05-15T09:26:47.450Z"
     }
   ]
 }

@@ -17,6 +17,7 @@ const Login: React.FC<Props> = ({ onLogin }) => {
 
     setIsLoading(true);
     try {
+      //Llama al servicio de login
       const res = await authService.login(username, email);
       onLogin(res.user);
     } catch (error) {

@@ -12,7 +12,7 @@ export default function FileUpload({ onUploaded }: { onUploaded: () => void }) {
       setIsUploading(true);
       await fileService.upload(file);
       onUploaded();
-      setFile(null); // Reset file after upload
+      setFile(null); // Restablecer el archivo después de la carga
     } catch (error) {
       console.error("Error uploading file:", error);
     } finally {

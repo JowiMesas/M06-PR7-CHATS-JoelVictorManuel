@@ -20,12 +20,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const stored = localStorage.getItem('user');
     return stored ? JSON.parse(stored) : null;
   });
-
+//Comprueba la autenticación del usuario y lo guarda en localStorage
   const login = (u: User) => {
     setUser(u);
     localStorage.setItem('user', JSON.stringify(u));
   };
-
+  //Borra el localStorage lo que permite cerrar sesión
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
