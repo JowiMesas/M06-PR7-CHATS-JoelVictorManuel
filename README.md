@@ -44,7 +44,7 @@ cd server
 npm install
 
 # Iniciar el servidor (desarrollo)
-npm run dev
+node index.js
 ```
 
 > El servidor estará disponible en: http://localhost:4000
@@ -52,7 +52,7 @@ npm run dev
 ### Paso 3: Configurar el frontend
 
 ```bash
-cd ../client
+cd client
 npm install
 
 # Iniciar la aplicación en modo desarrollo
