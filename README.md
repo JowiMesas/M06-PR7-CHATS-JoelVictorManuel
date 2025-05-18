@@ -210,5 +210,5 @@ M06-PR7-CHATS-JoelVictorManuel/
 ---
 
 <div align="center">
-Desarrollado por Joel, Victor y Manuel para el módulo M06-PR7
+Desarrollado por Joel Mesasy Victor Manuel para el módulo M06-PR7
 </div>
