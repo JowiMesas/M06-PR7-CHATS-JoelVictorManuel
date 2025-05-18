@@ -13,7 +13,7 @@
 
 </div>
 
-> 💡 **¿Tienes preguntas sobre este repositorio?** [![Consulta DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/JowiMesas/M06-PR7-CHATS-JoelVictorManuel) para obtener más información.
+> 💡 **¿Tienes preguntas sobre este repositorio?** [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/JowiMesas/M06-PR7-CHATS-JoelVictorManuel) para obtener más información.
 
 ## 📋 Características Principales
 
