@@ -205,7 +205,7 @@ M06-PR7-CHATS-JoelVictorManuel/
 
 ## 📜 Licencia
 
-© 2025 Centro Educativo - Todos los derechos reservados
+© 2025 Stucom - Todos los derechos reservados
 
 ---
 
